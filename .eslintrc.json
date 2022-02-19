@@ -4,9 +4,10 @@
         "es2021": true
     },
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "prettier" 
+        // "eslint:recommended",
+        // "plugin:react/recommended",
+        // "prettier",
+        "airbnb"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -20,8 +21,10 @@
         "prettier"
     ],
     "rules": {
-        "quotes": [2, "single", { "avoidEscape": true }],
-        "no-multiple-empty-lines": ["error", { "max": 2 }]
-        
+        // "quotes": [2, "single", { "avoidEscape": true }],
+        // "no-multiple-empty-lines": ["error", { "max": 1 }],
+        "linebreak-style": ["error", "windows"],
+        // "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        // "react/destructuring-assignment": ["enabled", "always"]        
     }
 }
