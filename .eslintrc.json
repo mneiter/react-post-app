@@ -4,10 +4,10 @@
         "es2021": true
     },
     "extends": [
-        // "eslint:recommended",
-        // "plugin:react/recommended",
+        // "eslint:recommended"
+        // "plugin:react/recommended"
         // "prettier",
-        "airbnb"
+        // "airbnb"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -21,10 +21,10 @@
         "prettier"
     ],
     "rules": {
+        // "linebreak-style": ["error", "windows"]
         // "quotes": [2, "single", { "avoidEscape": true }],
         // "no-multiple-empty-lines": ["error", { "max": 1 }],
-        "linebreak-style": ["error", "windows"],
-        // "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        // "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
         // "react/destructuring-assignment": ["enabled", "always"]        
     }
 }
