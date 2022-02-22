@@ -1,5 +1,6 @@
 import React, { useState, useRef, useMemo } from 'react';
 import {v4 as uuidv4} from 'uuid'
+import PostFilter from './components/Post/PostFilter';
 import PostForm from './components/Post/PostForm';
 import PostList from './components/Post/PostList';
 import MyInput from './components/UI/input/MyInput';
@@ -17,20 +18,19 @@ function App() {
       {id: uuidv4(), title: 'Payton', body: 'text text text text text'}
     ]);
 
-  const [selectedSort, setSelectedSort] = useState('');
-  const [searchQuery, setSearchQuery] = useState('')
-  
+    const [filter, setFilter] = useState({sort: '', query: ''})
+
   const sorteadPosts = useMemo(() => {
-    if(selectedSort)
+    if(filter.sort)
     {
-      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
+      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]));
     }
     return posts;
-  }, [selectedSort, posts])
+  }, [filter.sort, posts])
 
   const sortedAndSearchedPosts = useMemo(() => {
-    return sorteadPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLowerCase()))
-  }, [searchQuery, sorteadPosts])
+    return sorteadPosts.filter(post => post.title.toLowerCase().includes(filter.query.toLowerCase()))
+  }, [filter.query, sorteadPosts])
 
   const createPost = newPost => {      
     setPosts([...posts, newPost]);
@@ -40,23 +40,11 @@ function App() {
     setPosts(posts.filter(p => p.id != post.id));
   }
 
-  const sortPosts = (sortValue) =>{      
-    setSelectedSort(sortValue);      
-  }
-
   return (
     <div className="App">
       <PostForm createPost={createPost} />   
       <hr style={{margin: '15px 0'}}/>
-      <MySelect
-        value={selectedSort}
-        onChange={sortValue => sortPosts(sortValue)}
-        defaultValue="Oredr By"
-        options = {[{name: 'Title', value: 'title'},
-                    {name: 'Description', value: 'body'}]}>
-      </MySelect>
-      <MyInput value={searchQuery} placeholder="search ..." onChange={e => setSearchQuery(e.target.value)} />
-
+      <PostFilter filetr={filter} setFilter={setFilter} />
       {
         sortedAndSearchedPosts.length
           ? <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
