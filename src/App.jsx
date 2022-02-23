@@ -43,11 +43,7 @@ function App() {
       <PostForm createPost={createPost} />   
       <hr style={{margin: '15px 0'}}/>
       <PostFilter filetr={filter} setFilter={setFilter} />
-      {
-        sortedAndSearchedPosts.length
-          ? <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
-          : <h1 style={{textAlign: 'center'}}>Items not found</h1>
-      }
+      <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
     </div>
   );
 }
