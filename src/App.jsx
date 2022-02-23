@@ -3,8 +3,6 @@ import {v4 as uuidv4} from 'uuid'
 import PostFilter from './components/Post/PostFilter';
 import PostForm from './components/Post/PostForm';
 import PostList from './components/Post/PostList';
-import MyInput from './components/UI/input/MyInput';
-import MySelect from './components/UI/select/MySelect';
 
 import './styles/App.css';
 
