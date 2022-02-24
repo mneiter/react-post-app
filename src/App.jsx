@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { v4 as uuidv4 } from 'uuid';
 import PostFilter from './components/Post/PostFilter';
 import PostForm from './components/Post/PostForm';

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { v4 as uuidv4 } from 'uuid';
 import MyButton from '../UI/button/MyButton';
 import MyInput from '../UI/input/MyInput';
 
-function PostForm({ props, createPost }) {
+function PostForm({ createPost }) {
   const [post, setPost] = useState({ title: '', body: '' });
 
   const addNewPost = (e) => {

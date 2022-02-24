@@ -20,10 +20,12 @@
     ],
     "rules": {
         "react/prop-types": "off",
-        "no-console": "warn",
-        "import/first": "error",
-        "linebreak-style": ["error", "windows"],
+        "react/jsx-props-no-spreading": "off",
         "react/destructuring-assignment": "off",
-        "no-unused-vars": "off"
+        "no-console":"error",
+        "import/first": "error",
+        "no-unused-vars":"error",
+        "linebreak-style": ["error", "windows"],                
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}]
     }
 }
