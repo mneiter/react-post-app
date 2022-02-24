@@ -3,6 +3,7 @@ import {v4 as uuidv4} from 'uuid'
 import PostFilter from './components/Post/PostFilter';
 import PostForm from './components/Post/PostForm';
 import PostList from './components/Post/PostList';
+import MyModal from './components/UI/modal/MyModal';
 
 import './styles/App.css';
 
@@ -40,7 +41,9 @@ function App() {
 
   return (
     <div className="App">
-      <PostForm createPost={createPost} />   
+      <MyModal>
+        <PostForm createPost={createPost} />
+      </MyModal>         
       <hr style={{margin: '15px 0'}}/>
       <PostFilter filetr={filter} setFilter={setFilter} />
       <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
