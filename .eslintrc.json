@@ -4,10 +4,8 @@
         "es2021": true
     },
     "extends": [
-        // "eslint:recommended"
-        // "plugin:react/recommended"
-        // "prettier",
-        // "airbnb"
+        "airbnb",
+        "airbnb/hooks"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -17,14 +15,15 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react",        
+        "react",
         "prettier"
     ],
     "rules": {
-        // "linebreak-style": ["error", "windows"]
-        // "quotes": [2, "single", { "avoidEscape": true }],
-        // "no-multiple-empty-lines": ["error", { "max": 1 }],
-        // "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
-        // "react/destructuring-assignment": ["enabled", "always"]        
+        "react/prop-types": "off",
+        "no-console": "warn",
+        "import/first": "error",
+        "linebreak-style": ["error", "windows"],
+        "react/destructuring-assignment": "off",
+        "no-unused-vars": "off"
     }
 }
