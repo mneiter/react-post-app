@@ -4,6 +4,7 @@ import PostFilter from './components/Post/PostFilter';
 import PostForm from './components/Post/PostForm';
 import PostList from './components/Post/PostList';
 import MyButton from './components/UI/button/MyButton';
+import MyLoader from './components/UI/loader/MyLoader';
 import MyModal from './components/UI/modal/MyModal';
 import usePosts from './hooks/usePosts';
 
@@ -15,6 +16,7 @@ function App() {
   const [filter, setFilter] = useState({ sort: '', query: '' });
   const [isModalVisible, setIsModalVisible] = useState(false);
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+  const [isPostLoading, setIsPostLoading] = useState();
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
@@ -26,8 +28,13 @@ function App() {
   };
 
   async function fetchPosts() {
-    const postsFromService = await PostService.getAll();
-    setPosts(postsFromService);
+    setIsPostLoading(true);
+
+    setTimeout(async () => {
+      const postsFromService = await PostService.getAll();
+      setPosts(postsFromService);
+      setIsPostLoading(false);
+    }, 60000);
   }
 
   useEffect(() => {
@@ -44,7 +51,12 @@ function App() {
       </MyModal>
       <PostFilter filetr={filter} setFilter={setFilter} />
       <hr style={{ margin: '15px 0' }} />
-      <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
+      {
+        isPostLoading
+          ? <div className="loader"><MyLoader /></div>
+          : <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
+      }
+
     </div>
   );
 }

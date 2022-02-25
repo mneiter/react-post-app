@@ -18,10 +18,9 @@
     padding: 15px;
     border: 2px solid teal;
     margin-top: 15px;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
-
 
 .post-enter {
     opacity: 0;
@@ -39,4 +38,11 @@
 .post-exit-active {
     opacity: 0;
     transition: opacity 500ms ease-in;
+}
+
+.loader {
+    display: flex;
+    padding: 15px;
+    margin-top: 50px;
+    justify-content: center;
 }
