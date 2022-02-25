@@ -1,6 +1,5 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useEffect, useState } from 'react';
+import PostService from './api/PostService';
 import PostFilter from './components/Post/PostFilter';
 import PostForm from './components/Post/PostForm';
 import PostList from './components/Post/PostList';
@@ -11,15 +10,7 @@ import usePosts from './hooks/usePosts';
 import './styles/App.css';
 
 function App() {
-  const [posts, setPosts] = useState(
-    [
-      { id: uuidv4(), title: 'Javascript', body: 'text text text text text' },
-      { id: uuidv4(), title: 'C#', body: 'text text text text text' },
-      { id: uuidv4(), title: 'Java', body: 'text text text text text' },
-      { id: uuidv4(), title: 'F#', body: 'text text text text text' },
-      { id: uuidv4(), title: 'Payton', body: 'text text text text text' },
-    ],
-  );
+  const [posts, setPosts] = useState([]);
 
   const [filter, setFilter] = useState({ sort: '', query: '' });
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -35,16 +26,19 @@ function App() {
   };
 
   async function fetchPosts() {
-    const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
-    setPosts(response.data);
+    const postsFromService = await PostService.getAll();
+    setPosts(postsFromService);
   }
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <div className="App">
       <MyButton style={{ marginTop: 30 }} onClick={() => setIsModalVisible(true)}>
         Create Post
       </MyButton>
-      <MyButton onClick={() => fetchPosts()}>Get Posts</MyButton>
       <MyModal visible={isModalVisible} setVisible={setIsModalVisible}>
         <PostForm createPost={createPost} />
       </MyModal>
