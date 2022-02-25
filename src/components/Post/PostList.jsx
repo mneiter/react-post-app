@@ -1,4 +1,5 @@
 import React from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { v4 as uuidv4 } from 'uuid';
 import PostItem from './PostItem';
 
@@ -10,14 +11,21 @@ function PostList({ posts, title, removePost }) {
   return (
     <div className="postList">
       <h1 style={{ textAlign: 'center' }}>{title}</h1>
-      {posts.map((post, index) => (
-        <PostItem
-          remove={removePost}
-          post={post}
-          key={uuidv4()}
-          number={index + 1}
-        />
-      ))}
+      <TransitionGroup>
+        {posts.map((post, index) => (
+          <CSSTransition
+            key={uuidv4()}
+            timeout={500}
+            classNames="post"
+          >
+            <PostItem
+              remove={removePost}
+              post={post}
+              number={index + 1}
+            />
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
     </div>
   );
 }
