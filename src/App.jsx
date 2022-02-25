@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import PostFilter from './components/Post/PostFilter';
@@ -33,11 +34,17 @@ function App() {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
 
+  async function fetchPosts() {
+    const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+    setPosts(response.data);
+  }
+
   return (
     <div className="App">
       <MyButton style={{ marginTop: 30 }} onClick={() => setIsModalVisible(true)}>
-        Create post
+        Create Post
       </MyButton>
+      <MyButton onClick={() => fetchPosts()}>Get Posts</MyButton>
       <MyModal visible={isModalVisible} setVisible={setIsModalVisible}>
         <PostForm createPost={createPost} />
       </MyModal>

@@ -22,7 +22,7 @@
         "react/prop-types": "off",
         "react/jsx-props-no-spreading": "off",
         "react/destructuring-assignment": "off",
-        "no-console":"error",
+        "no-console":"warn",
         "no-debugger":"warn",
         "import/first": "error",
         "no-unused-vars":"error",
