@@ -34,7 +34,7 @@ function App() {
       const postsFromService = await PostService.getAll();
       setPosts(postsFromService);
       setIsPostLoading(false);
-    }, 60000);
+    }, 5000);
   }
 
   useEffect(() => {
