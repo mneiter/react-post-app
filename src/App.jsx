@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import PostService from './api/PostService';
 import PostFilter from './components/Post/PostFilter';
 import PostForm from './components/Post/PostForm';
@@ -8,26 +9,29 @@ import MyLoader from './components/UI/loader/MyLoader';
 import MyModal from './components/UI/modal/MyModal';
 import useFetching from './hooks/useFetching';
 import usePosts from './hooks/usePosts';
+import { getPageCount } from './utils/pages';
 
 import './styles/App.css';
+import { usePagination } from './hooks/usePagination';
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({ sort: '', query: '' });
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [totalCount, setTotalCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   // eslint-disable-next-line no-unused-vars
   const [limit, setLimit] = useState(10);
   // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(1);
-
   const [fetchPosts, isPostLoading, postError] = useFetching(async () => {
     const response = await PostService.getAll(limit, page);
     setPosts(response.data);
-    setTotalCount(response.headers['x-total-count']);
+    const totalCount = response.headers['x-total-count'];
+
+    setTotalPages(getPageCount(totalCount, limit));
   });
+  const pagesArray = usePagination(totalPages);
 
   useEffect(() => {
     fetchPosts();
@@ -67,6 +71,11 @@ function App() {
           : <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
       }
 
+      {
+        pagesArray.map((i) => (
+          <MyButton key={uuidv4()}>{i}</MyButton>
+        ))
+      }
     </div>
   );
 }
