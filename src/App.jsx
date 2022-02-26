@@ -6,12 +6,12 @@ import PostList from './components/Post/PostList';
 import MyButton from './components/UI/button/MyButton';
 import MyLoader from './components/UI/loader/MyLoader';
 import MyModal from './components/UI/modal/MyModal';
+import { MyPagination } from './components/UI/pagination/MyPagination';
 import useFetching from './hooks/useFetching';
 import usePosts from './hooks/usePosts';
 import { getPageCount } from './utils/pages';
 
 import './styles/App.css';
-import { usePagination } from './hooks/usePagination';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -30,7 +30,6 @@ function App() {
 
     setTotalPages(getPageCount(totalCount, limit));
   });
-  const pagesArray = usePagination(totalPages);
 
   useEffect(() => {
     fetchPosts(limit, page);
@@ -74,15 +73,7 @@ function App() {
           ? <div className="loader"><MyLoader /></div>
           : <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
       }
-      <div className="page__wrapper">
-        {
-          pagesArray.map((p) => (
-            <span key={p} onClick={() => changePage(p)} className={p === page ? 'page page__current' : 'page'}>
-              {p}
-            </span>
-          ))
-        }
-      </div>
+      <MyPagination page={page} changePage={changePage} totalPages={totalPages} />
     </div>
   );
 }
