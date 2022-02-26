@@ -21,9 +21,9 @@ function App() {
   const [totalPages, setTotalPages] = useState(0);
   // eslint-disable-next-line no-unused-vars
   const [limit, setLimit] = useState(10);
-  // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(1);
-  const [fetchPosts, isPostLoading, postError] = useFetching(async () => {
+  // eslint-disable-next-line no-shadow
+  const [fetchPosts, isPostLoading, postError] = useFetching(async (limit, page) => {
     const response = await PostService.getAll(limit, page);
     setPosts(response.data);
     const totalCount = response.headers['x-total-count'];
@@ -33,7 +33,7 @@ function App() {
   const pagesArray = usePagination(totalPages);
 
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(limit, page);
   }, []);
 
   const createPost = (newPost) => {
@@ -43,6 +43,11 @@ function App() {
 
   const removePost = (post) => {
     setPosts(posts.filter((p) => p.id !== post.id));
+  };
+
+  const changePage = (p) => {
+    setPage(p);
+    fetchPosts(limit, p);
   };
 
   return (
@@ -72,7 +77,7 @@ function App() {
       <div className="page__wrapper">
         {
           pagesArray.map((p) => (
-            <span key={p} onClick={() => setPage()} className={p === page ? 'page page__current' : 'page'}>
+            <span key={p} onClick={() => changePage(p)} className={p === page ? 'page page__current' : 'page'}>
               {p}
             </span>
           ))
