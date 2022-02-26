@@ -70,12 +70,15 @@ function App() {
           ? <div className="loader"><MyLoader /></div>
           : <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
       }
-
-      {
-        pagesArray.map((i) => (
-          <MyButton key={uuidv4()}>{i}</MyButton>
-        ))
-      }
+      <div className="page__wrapper">
+        {
+          pagesArray.map((p) => (
+            <span key={uuidv4()} className={p === page ? 'page page__current' : 'page'}>
+              {p}
+            </span>
+          ))
+        }
+      </div>
     </div>
   );
 }
