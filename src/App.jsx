@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import PostService from './api/PostService';
 import PostFilter from './components/Post/PostFilter';
 import PostForm from './components/Post/PostForm';
@@ -73,7 +72,7 @@ function App() {
       <div className="page__wrapper">
         {
           pagesArray.map((p) => (
-            <span key={uuidv4()} className={p === page ? 'page page__current' : 'page'}>
+            <span key={p} onClick={() => setPage()} className={p === page ? 'page page__current' : 'page'}>
               {p}
             </span>
           ))
