@@ -13,13 +13,20 @@ import './styles/App.css';
 
 function App() {
   const [posts, setPosts] = useState([]);
-
   const [filter, setFilter] = useState({ sort: '', query: '' });
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [totalCount, setTotalCount] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [limit, setLimit] = useState(10);
+  // eslint-disable-next-line no-unused-vars
+  const [page, setPage] = useState(1);
+
   const [fetchPosts, isPostLoading, postError] = useFetching(async () => {
-    const postsFromService = await PostService.getAll();
-    setPosts(postsFromService);
+    const response = await PostService.getAll(limit, page);
+    setPosts(response.data);
+    setTotalCount(response.headers['x-total-count']);
   });
 
   useEffect(() => {
