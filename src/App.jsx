@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import MyAppRouter from './components/UI/approuter/MyAppRouter';
@@ -10,6 +10,13 @@ function App() {
   const value = useMemo(() => ({
     authUser, setAuthUser,
   }), [authUser]);
+
+  useEffect(() => {
+    const authUserObject = localStorage.getItem('auth');
+    if (authUserObject) {
+      setAuthUser(JSON.parse(authUserObject));
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={value}>

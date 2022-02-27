@@ -6,6 +6,7 @@ function MyGreeting() {
   return (
     <p>
       Hello
+      {' '}
       {authUser?.name}
     </p>
   );

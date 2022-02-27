@@ -8,7 +8,10 @@ function Login() {
   const { authUser, setAuthUser } = useContext(AuthContext);
   const submit = (e) => {
     e.preventDefault();
-    setAuthUser({ name: 'React', isAuthorized: true });
+    const authUserObject = { name: 'React', isAuthorized: true };
+    setAuthUser(authUserObject);
+
+    localStorage.setItem('auth', JSON.stringify(authUserObject));
   };
 
   return (
