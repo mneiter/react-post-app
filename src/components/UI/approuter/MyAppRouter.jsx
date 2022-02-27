@@ -5,22 +5,32 @@ import {
   Route,
 } from 'react-router-dom';
 import MyNav from '../nav/MyNav';
-import { routes } from '../../../router';
+import { privateRoutes, publicRoutes } from '../../../router';
 
 function MyAppRouter() {
+  const isUserAuthorized = true;
   return (
     <BrowserRouter>
       <MyNav />
       <Routes>
         {
-          routes.map((route) => (
-            <Route
-              key={route.path}
-              path={route.path}
-              element={route.element}
-              exact={route.exact}
-            />
-          ))
+          isUserAuthorized
+            ? privateRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+                exact={route.exact}
+              />
+            ))
+            : publicRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+                exact={route.exact}
+              />
+            ))
         }
       </Routes>
     </BrowserRouter>
