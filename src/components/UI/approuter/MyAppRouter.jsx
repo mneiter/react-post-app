@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
-  BrowserRouter,
   Routes,
   Route,
 } from 'react-router-dom';
-import MyNav from '../nav/MyNav';
+import { AuthContext } from '../../../context';
 import { privateRoutes, publicRoutes } from '../../../router';
 
 function MyAppRouter() {
-  const isUserAuthorized = true;
+  // eslint-disable-next-line no-unused-vars
+  const { authUser } = useContext(AuthContext);
   return (
-    <BrowserRouter>
-      <MyNav />
-      <Routes>
-        {
-          isUserAuthorized
+    <Routes>
+      {
+        console.log(authUser.isAuthorized)
+      }
+      {
+          authUser.isAuthorized
             ? privateRoutes.map((route) => (
               <Route
                 key={route.path}
@@ -32,8 +33,7 @@ function MyAppRouter() {
               />
             ))
         }
-      </Routes>
-    </BrowserRouter>
+    </Routes>
   );
 }
 
