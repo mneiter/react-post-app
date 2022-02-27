@@ -4,13 +4,13 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import MyNavbar from '../navbar/MyNavbar';
+import MyNav from '../nav/MyNav';
 import { routes } from '../../../router';
 
 function MyAppRouter() {
   return (
     <BrowserRouter>
-      <MyNavbar />
+      <MyNav />
       <Routes>
         {
           routes.map((route) => (
@@ -21,12 +21,7 @@ function MyAppRouter() {
               exact={route.exact}
             />
           ))
-
         }
-        <Route
-          path="*"
-          element={(<div style={{ padding: '1rem' }}><h1>There&apos;s nothing here!</h1></div>)}
-        />
       </Routes>
     </BrowserRouter>
   );
