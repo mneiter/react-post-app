@@ -8,6 +8,7 @@ function MyNavbar() {
       <div className={cl.navbar__links}>
         <Link to="/about">About</Link>
         <Link to="/posts">Posts</Link>
+        <Link to="/error">Error</Link>
       </div>
     </div>
   );
