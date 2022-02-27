@@ -19,7 +19,13 @@ function MyGreeting() {
         Hello
         {' '}
         {authUser?.name}
-        <MyButton onClick={() => clickLogout()}>logout</MyButton>
+        {' '}
+        {
+        authUser?.isAuthorized
+          ? <MyButton onClick={() => clickLogout()}>logout</MyButton>
+          : <div />
+        }
+
       </p>
 
     </div>
