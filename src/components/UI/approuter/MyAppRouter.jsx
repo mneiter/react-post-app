@@ -8,6 +8,7 @@ import MyNavbar from '../navbar/MyNavbar';
 import About from '../../../pages/About';
 import Posts from '../../../pages/Posts';
 import Error from '../../../pages/Error';
+import PostDetails from '../../../pages/PostDetails';
 
 function MyAppRouter() {
   return (
@@ -15,7 +16,8 @@ function MyAppRouter() {
       <MyNavbar />
       <Routes>
         <Route path="/about" element={<About />} />
-        <Route path="/posts" element={<Posts />} />
+        <Route exect path="/posts" element={<Posts />} />
+        <Route exect path="/posts/:id" element={<PostDetails />} />
         <Route path="/error" element={<Error />} />
         <Route
           path="*"
