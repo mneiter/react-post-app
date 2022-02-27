@@ -41,6 +41,10 @@
     transition: opacity 500ms ease-in;
 }
 
+.post__btns {
+    display: flex;
+}
+
 .loader {
     display: flex;
     padding: 15px;
