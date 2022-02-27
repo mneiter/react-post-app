@@ -3,20 +3,15 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Link,
 } from 'react-router-dom';
+import MyNavbar from './components/UI/navbar/MyNavbar';
 import About from './pages/About';
 import Posts from './pages/Posts';
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="navbar">
-        <div className="navbar__links">
-          <Link to="/about">About</Link>
-          <Link to="/posts">Posts</Link>
-        </div>
-      </div>
+      <MyNavbar />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
