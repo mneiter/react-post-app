@@ -1,80 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import PostService from './api/PostService';
-import PostFilter from './components/Post/PostFilter';
-import PostForm from './components/Post/PostForm';
-import PostList from './components/Post/PostList';
-import MyButton from './components/UI/button/MyButton';
-import MyLoader from './components/UI/loader/MyLoader';
-import MyModal from './components/UI/modal/MyModal';
-import { MyPagination } from './components/UI/pagination/MyPagination';
-import useFetching from './hooks/useFetching';
-import usePosts from './hooks/usePosts';
-import { getPageCount } from './utils/pages';
-
-import './styles/App.css';
+import React from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+} from 'react-router-dom';
+import About from './pages/About';
+import Posts from './pages/Posts';
 
 function App() {
-  const [posts, setPosts] = useState([]);
-  const [filter, setFilter] = useState({ sort: '', query: '' });
-  const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [totalPages, setTotalPages] = useState(0);
-  // eslint-disable-next-line no-unused-vars
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(1);
-  // eslint-disable-next-line no-shadow
-  const [fetchPosts, isPostLoading, postError] = useFetching(async (limit, page) => {
-    const response = await PostService.getAll(limit, page);
-    setPosts(response.data);
-    const totalCount = response.headers['x-total-count'];
-
-    setTotalPages(getPageCount(totalCount, limit));
-  });
-
-  useEffect(() => {
-    fetchPosts(limit, page);
-  }, []);
-
-  const createPost = (newPost) => {
-    setPosts([...posts, newPost]);
-    setIsModalVisible(false);
-  };
-
-  const removePost = (post) => {
-    setPosts(posts.filter((p) => p.id !== post.id));
-  };
-
-  const changePage = (p) => {
-    setPage(p);
-    fetchPosts(limit, p);
-  };
-
   return (
-    <div className="App">
-      <MyButton style={{ marginTop: 30 }} onClick={() => setIsModalVisible(true)}>
-        Create Post
-      </MyButton>
-      <MyModal visible={isModalVisible} setVisible={setIsModalVisible}>
-        <PostForm createPost={createPost} />
-      </MyModal>
-      <PostFilter filetr={filter} setFilter={setFilter} />
-      <hr style={{ margin: '15px 0' }} />
-      {
-        postError
-        && (
-        <h1>
-          Occure an error $
-          {postError}
-        </h1>
-        )
-      }
-      {
-        isPostLoading
-          ? <div className="loader"><MyLoader /></div>
-          : <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
-      }
-      <MyPagination page={page} changePage={changePage} totalPages={totalPages} />
-    </div>
+    <BrowserRouter>
+      <div className="navbar">
+        <div className="navbar__links">
+          <Link to="/about">About</Link>
+          <Link to="/posts">Posts</Link>
+        </div>
+      </div>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/posts" element={<Posts />} />
+        <Route
+          path="*"
+          element={(<main style={{ padding: '1rem' }}><h1>There&apos;s nothing here!</h1></main>)}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 export default App;

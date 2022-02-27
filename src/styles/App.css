@@ -6,7 +6,8 @@
 
 #root {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .App {
@@ -45,4 +46,17 @@
     padding: 15px;
     margin-top: 50px;
     justify-content: center;
+}
+
+.navbar {
+    height: 50px;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    padding: 0 15px teal;
+    background: lightgray;
+}
+
+.navbar__links {
+    margin-left: auto;
 }

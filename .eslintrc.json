@@ -52,8 +52,8 @@
             "error",
             {
                 "components": ["Link"],
-                "specialLink": ["hrefDefault"],
-                "aspects": ["noHref"]
+                "specialLink": ["hrefDefault", "hrefLeft", "hrefRight", "to"],
+                "aspects": ["noHref", "invalidHref", "preferButton"]
             }
         ],
         "jsx-a11y/label-has-associated-control": [ 2, {
