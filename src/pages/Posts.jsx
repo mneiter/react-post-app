@@ -12,6 +12,8 @@ import usePosts from '../hooks/usePosts';
 import { getPageCount } from '../utils/pages';
 
 import '../styles/App.css';
+import { useObserver } from '../hooks/useObserver';
+import MySelect from '../components/UI/select/MySelect';
 
 function Posts() {
   const [posts, setPosts] = useState([]);
@@ -30,28 +32,15 @@ function Posts() {
     setTotalPages(getPageCount(totalCount, limit));
   });
 
-  const observer = useRef();
   const lastElement = useRef();
-
-  useEffect(() => {
-    if (isPostLoading) return;
-    if (observer && observer.current) observer.current.disconnect();
-    const callback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.target === lastElement.current && entry.isIntersecting && page < totalPages) {
-          window.scrollTo(0, 0);
-          setPage(page + 1);
-        }
-      });
-    };
-
-    observer.current = new IntersectionObserver(callback);
-    observer.current.observe(lastElement.current);
-  }, [isPostLoading]);
+  useObserver(lastElement, page < totalPages, isPostLoading, () => {
+    window.scrollTo(0, 0);
+    setPage(page + 1);
+  });
 
   useEffect(() => {
     fetchPosts(limit, page);
-  }, [page]);
+  }, [page, limit]);
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
@@ -71,6 +60,18 @@ function Posts() {
         <PostForm createPost={createPost} />
       </MyModal>
       <PostFilter filetr={filter} setFilter={setFilter} />
+      <MySelect
+        value={limit}
+        onChange={(value) => setLimit(value)}
+        defaultValue="number of items per page"
+        options={[
+          { value: 5, name: '5' },
+          { value: 10, name: '10' },
+          { value: 25, name: '25' },
+          { value: 50, name: '50' },
+          { value: -1, name: 'All' },
+        ]}
+      />
       <hr style={{ margin: '15px 0' }} />
       {
         postError
@@ -86,7 +87,7 @@ function Posts() {
           && <div className="loader"><MyLoader /></div>
       }
       <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
-      <div ref={lastElement} />
+      <div ref={lastElement} style={{ height: 2, background: 'red' }} />
       {
         posts.length < 100
           ? <h1>Load data</h1>
