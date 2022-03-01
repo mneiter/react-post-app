@@ -31,6 +31,17 @@
         "linebreak-style": ["error", "windows"],          
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}],
         "import/prefer-default-export": "off",
+        "max-len": ["error", { 
+            "code": 120,
+            "tabWidth": 4,
+            "comments": 65,
+            "ignoreComments": true,
+            "ignoreUrls": true,
+            "ignoreStrings": true,
+            "ignoreTemplateLiterals": true,
+            "ignoreRegExpLiterals": true,
+            "ignorePattern": ""
+            }],
         "jsx-a11y/control-has-associated-label": [ 2, {
             "controlComponents": ["CustomButton"],
             "ignoreElements": [
