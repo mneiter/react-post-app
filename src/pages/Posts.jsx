@@ -7,7 +7,6 @@ import PostList from '../components/Post/PostList';
 import MyButton from '../components/UI/button/MyButton';
 import MyLoader from '../components/UI/loader/MyLoader';
 import MyModal from '../components/UI/modal/MyModal';
-import { MyPagination } from '../components/UI/pagination/MyPagination';
 import useFetching from '../hooks/useFetching';
 import usePosts from '../hooks/usePosts';
 import { getPageCount } from '../utils/pages';
@@ -40,9 +39,8 @@ function Posts() {
     const callback = (entries) => {
       entries.forEach((entry) => {
         if (entry.target === lastElement.current && entry.isIntersecting && page < totalPages) {
-          setTimeout(() => {
-            setPage(page + 1);
-          }, 1000);
+          window.scrollTo(0, 0);
+          setPage(page + 1);
         }
       });
     };
@@ -62,11 +60,6 @@ function Posts() {
 
   const removePost = (post) => {
     setPosts(posts.filter((p) => p.id !== post.id));
-  };
-
-  const changePage = (p) => {
-    setPage(p);
-    fetchPosts(limit, p);
   };
 
   return (
@@ -94,7 +87,11 @@ function Posts() {
       }
       <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
       <div ref={lastElement} />
-      <MyPagination page={page} changePage={changePage} totalPages={totalPages} />
+      {
+        posts.length < 100
+          ? <h1>Load data</h1>
+          : <h1>Data is loaded</h1>
+      }
     </div>
   );
 }
