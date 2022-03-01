@@ -15,19 +15,15 @@ function MyGreeting() {
 
   return (
     <div>
-      <p>
-        Hello
-        {' '}
-        {authUser?.name}
-        {' '}
-        {
+      Hello
+      {' '}
+      {authUser?.name}
+      {' '}
+      {
         authUser?.isAuthorized
           ? <MyButton onClick={() => clickLogout()}>logout</MyButton>
           : <div />
         }
-
-      </p>
-
     </div>
   );
 }
