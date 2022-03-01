@@ -12,9 +12,6 @@ function MyAppRouter() {
   return (
     <Routes>
       {
-        console.log(authUser.isAuthorized)
-      }
-      {
           authUser.isAuthorized
             ? privateRoutes.map((route) => (
               <Route
