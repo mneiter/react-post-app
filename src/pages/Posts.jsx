@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, { useEffect, useRef, useState } from 'react';
 import PostService from '../api/PostService';
 import PostFilter from '../components/Post/PostFilter';
 import PostForm from '../components/Post/PostForm';
@@ -25,15 +26,34 @@ function Posts() {
   // eslint-disable-next-line no-shadow
   const [fetchPosts, isPostLoading, postError] = useFetching(async (limit, page) => {
     const response = await PostService.getAll(limit, page);
-    setPosts(response.data);
+    setPosts([...posts, ...response.data]);
     const totalCount = response.headers['x-total-count'];
-
     setTotalPages(getPageCount(totalCount, limit));
   });
 
+  const observer = useRef();
+  const lastElement = useRef();
+
+  useEffect(() => {
+    if (isPostLoading) return;
+    if (observer && observer.current) observer.current.disconnect();
+    const callback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.target === lastElement.current && entry.isIntersecting && page < totalPages) {
+          setTimeout(() => {
+            setPage(page + 1);
+          }, 1000);
+        }
+      });
+    };
+
+    observer.current = new IntersectionObserver(callback);
+    observer.current.observe(lastElement.current);
+  }, [isPostLoading]);
+
   useEffect(() => {
     fetchPosts(limit, page);
-  }, []);
+  }, [page]);
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
@@ -70,9 +90,10 @@ function Posts() {
       }
       {
         isPostLoading
-          ? <div className="loader"><MyLoader /></div>
-          : <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
+          && <div className="loader"><MyLoader /></div>
       }
+      <PostList removePost={removePost} posts={sortedAndSearchedPosts} title="The list of posts" />
+      <div ref={lastElement} />
       <MyPagination page={page} changePage={changePage} totalPages={totalPages} />
     </div>
   );
