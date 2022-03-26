@@ -19,7 +19,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={value}>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <MyNav />
         <MyAppRouter />
       </BrowserRouter>
